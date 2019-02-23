@@ -1,0 +1,50 @@
+<?php $__env->startSection('content'); ?>
+
+    <center><h1><b style="color: #c0ddf6">Your Profile</b></h1></center>
+    <div id="container3">
+    <form method="POST" action="/profile/update" class="form3">
+        <div class="form-group hidden">
+            <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
+            <input type="hidden" name="_method" value="PATCH">
+        </div>
+        <div class="form-group <?php echo e($errors->has('name') ? ' has-error' : ''); ?>">
+            <label for="email" class="control-label"><b>Name:</b></label>
+            <input type="text" name="name" placeholder="Please enter your email here" class="form-control" value="<?php echo e($user->name); ?>"/>
+
+            <?php if ($errors->has('name')) :?>
+            <span class="help-block">
+            <strong><?php echo e($errors->first('name')); ?></strong>
+        </span>
+            <?php endif;?>
+
+        </div>
+        <div class="form-group <?php echo e($errors->has('email') ? ' has-error' : ''); ?>">
+            <label for="email" class="control-label"><b>Email:</b></label>
+            <input type="text" name="email" placeholder="Please enter your email here" class="form-control" value="<?php echo e($user->email); ?>"/>
+
+            <?php if ($errors->has('email')) :?>
+            <span class="help-block">
+            <strong><?php echo e($errors->first('email')); ?></strong>
+        </span>
+            <?php endif;?>
+
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-default"> Submit </button>
+        </div>
+    </form>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

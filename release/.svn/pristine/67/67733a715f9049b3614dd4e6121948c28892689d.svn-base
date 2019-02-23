@@ -1,0 +1,15 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+class ProduitController extends Controller
+{
+    public function produit($id)
+    {
+        $produit = DB::select("SELECT * from produit where id = '$id'");
+        return view('produit', ['produit' => $produit]);
+    }
+}

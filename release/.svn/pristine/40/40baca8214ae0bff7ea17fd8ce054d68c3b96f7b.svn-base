@@ -1,0 +1,68 @@
+@extends('layouts.app')
+
+
+
+@section('content')
+<?php
+$total = 0;
+?>
+    <table id="cart" class="table table-hover table-condensed">
+        <thead>
+        <tr>
+            <th style="width:50%; color: white">Product</th>
+            <th style="width:10%; color: white">Price</th>
+
+            <th style="width:22%; color: white" class="text-center">Subtotal</th>
+            <th style="width:8%; color: white">Cancel</th>
+        </tr>
+        </thead>
+        @foreach($paniers as $panier)
+        <tbody>
+        <tr>
+            <td data-th="Product">
+                <div class="row">
+                    <div class="col-sm-3 hidden-xs"><img src="{{$panier->produit[0]->image}}" alt="..." class="img-responsive" style="width: 40%"/></div>
+                    <div class="col-sm-9">
+                        <h4 class="nomargin" style="color: white">{{$panier->produit[0]->name_produit}}</h4>
+                        <p style="color: white">{{$panier->produit[0]->description}}</p>
+                    </div>
+                </div>
+            </td>
+            <td data-th="Price" style="color: white">{{$panier->produit[0]->prix}}€</td>
+
+            <td data-th="Subtotal" class="text-center" style="color: white">{{$panier->produit[0]->prix}}€</td>
+            <td>
+                <form action="{{action('ProduitController@delete')}}" method="get">
+                    @csrf
+                    <input type="number" value="{{$panier->id}}" name="id" hidden>
+                    <button type="submit">
+                        Cancel
+                    </button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+            <?php
+                $total += $panier->produit[0]->prix;
+            ?>
+        @endforeach
+        <tfoot>
+
+        <tr>
+            <td>
+                <form>
+                    @csrf
+                    <button type="submit">Valider</button>
+                </form>
+            </td>
+            <td><form action="{{url('catalogue')}}">
+                    @csrf
+                    <button type="submit">Continue</button>
+                </form></td>
+
+            <td class="hidden-xs text-center"><strong style="color: white">{{$total}}€</strong></td>
+        </tr>
+        </tfoot>
+    </table>
+
+@endsection

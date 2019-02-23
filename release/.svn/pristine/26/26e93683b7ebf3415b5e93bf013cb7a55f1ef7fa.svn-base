@@ -1,0 +1,63 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Model\Panier;
+use App\Model\Produit;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
+class ProduitController extends Controller
+{
+    public function produit($id)
+    {
+        $produit = DB::select("SELECT * from produit where id = '$id'");
+        return view('produit', ['produit' => $produit]);
+    }
+    public function stock(Request $request)
+    {
+        $produits = new Produit();
+        $produit = $produits->find($request->get('id'));
+        $produit->quantite = $request->get('stock');
+        $produit->save();
+        $id = $request->get('id');
+        $produit = DB::select("SELECT * from produit where id = '$id'");
+        return view('produit', ['produit' => $produit]);
+
+
+    }
+    public function add(Request $request)
+    {
+        $id = Auth::user()->id;
+        $panier = new Panier();
+        $panier->user_id = Auth::user()->id;
+        $panier->produit_id = $request->get('id');
+        $panier->save();
+
+        $panier = new Panier();
+        $paniers = $panier::all()->where('user_id','=',$id);
+        return view('cart')->withPaniers($paniers);
+
+    }
+    public function cart()
+    {
+        $id = Auth::user()->id;
+        $panier = new Panier();
+        $paniers = $panier::all()->where('user_id','=',$id);
+        return view('cart')->withPaniers($paniers);
+
+
+    }
+    public function delete(Request $request)
+    {
+        $id = $request->get('id');
+        DB::table('panier')->where('id','=',$id)->delete();
+        $id = Auth::user()->id;
+        $panier = new Panier();
+        $paniers = $panier::all()->where('user_id','=',$id);
+        return view('cart')->withPaniers($paniers);
+
+
+    }
+}

@@ -1,0 +1,27 @@
+<?php $__env->startSection('content'); ?>
+
+    <div id="tab1">
+        <?php $__currentLoopData = $produits; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $produit): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+
+
+                    <div id="tab">
+                        <img src="<?php echo e($produit->image); ?>" class="logo1">
+                    <br/>
+                    <h3>Categorie : <?php echo e($produit->categorie->description_categorie); ?></h3>
+
+                    <h5>Name : <?php echo e($produit->name_produit); ?></h5>
+
+                    <h5>Price : <?php echo e($produit->prix); ?></h5>
+
+                    <br/>
+                    <input type="submit" value="Acheter">
+
+                    <input type="submit" value="Produit" id="produit">
+
+                    </div>
+
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+    </div>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

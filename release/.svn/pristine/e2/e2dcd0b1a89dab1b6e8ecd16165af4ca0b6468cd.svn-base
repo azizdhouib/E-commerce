@@ -1,0 +1,28 @@
+@extends('layouts.app')
+
+@section('content')
+
+    <div id="tab1">
+        @foreach($produits as $produit)
+
+
+                    <div id="tab">
+                        <img src="{{$produit->image}}" class="logo1">
+                    <br/>
+                    <h3>Categorie : {{$produit->categorie->description_categorie}}</h3>
+
+                    <h5>Name : {{$produit->name_produit}}</h5>
+
+                    <h5>Price : {{$produit->prix}}</h5>
+
+                    <br/>
+                    <input type="submit" value="Acheter">
+
+                    <input type="submit" value="Produit" id="produit">
+
+                    </div>
+
+            @endforeach
+    </div>
+
+@endsection
